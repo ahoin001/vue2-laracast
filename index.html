@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 2 Practice</title>
+</head>
+
+<body>
+
+<div id="app">
+   <p> {{ message }} </p>
+    <ul>
+        <li v-for="hero in heroes">
+            {{hero.name}}
+        </li>
+    </ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Alex!',
+            heroes:[
+                {name: 'Iron-Man'},
+                {name: 'Spiderman'},
+                {name: 'Moon Knight'},
+                {name: 'Luke Cage'}
+            ]
+        }
+    })
+</script>
+
+
+
+</body>
+
+</html>
