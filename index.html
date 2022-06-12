@@ -8,12 +8,22 @@
 <body>
 
 <div id="app">
-   <p> {{ message }} </p>
+   <p> {{ greeting }} </p>
+
+    <input type="text" placeholder="Enter a hero here" v-model="newHero" />
+    <button type="submit" v-on:click="onClick" > Add Hero </button>
+
     <ul>
         <li v-for="hero in heroes">
             {{hero.name}}
         </li>
     </ul>
+
+    <input type="text" placeholder="Who's getting removed?" v-model="heroToRemove" />
+    <button type="submit" v-on:click="removeHero" > Remove Hero </button>
+
+    <p v-if="showMessageToUser">{{messageToUser}}</p>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
@@ -23,14 +33,48 @@
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Alex!',
+            greeting: 'Hello Alex!',
+            newHero: '',
+            heroToRemove: '',
             heroes:[
-                {name: 'Iron-Man'},
-                {name: 'Spiderman'},
-                {name: 'Moon Knight'},
-                {name: 'Luke Cage'}
-            ]
+                { name: 'Iron-Man'},
+                { name: 'Spider-Man'},
+                { name: 'Moon Knight'},
+                { name: 'Luke Cage'}
+            ],
+            messageToUser:'',
+            showMessageToUser: false
+
+        },
+        methods: {
+            onClick: function () {
+              this.heroes.push({name:this.newHero})
+                this.newHero =''
+            },
+            removeHero: function () {
+                // get array with that hero removed
+                const newList = this.heroes.filter((hero) =>{
+
+                    return hero.name != this.heroToRemove
+                })
+
+                if (newList.length === this.heroes.length){
+                    this.messageToUser = `Couldn't find the hero ${this.heroToRemove}, type it EXACTLY including spaces`
+                    this.showMessageToUser=true
+                    this.heroToRemove=''
+                    return
+                } else {
+                    this.messageToUser = `Removed ${this.heroToRemove} from List!`
+                    this.showMessageToUser=true
+                    this.heroes = [...newList]
+                }
+
+                this.heroToRemove =''
+
+            }
         }
+
+
     })
 </script>
 
